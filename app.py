@@ -50,8 +50,8 @@ def validateLogIn():
         # connect to MySQL
         conn = mysql.connect()
         cursor = conn.cursor()
-        # customers: customer_id, c_username, c_firstname, c_lastname, c_password, timestamp
-        sql = "select * from customers where c_username = %s"
+        # customers: customer_id, customer_username, customer_firstname, customer_lastname, customer_password, timestamp
+        sql = "select * from customers where customer_username = %s"
         val = _username
         cursor.execute(sql, val)
         data = cursor.fetchall()
@@ -95,14 +95,14 @@ def signUp():
             cursor = conn.cursor()
             # _hashed_password = generate_password_hash(_password)
 
-            # customers: customer_id, c_username, c_firstname, c_lastname, c_password, timestamp
+            # customers: customer_id, customer_username, customer_firstname, customer_lastname, customer_password, timestamp
             # insert information
-            sql = "insert into customers (c_username, c_firstname, c_lastname, c_password) values (%s, %s, %s, %s)"
+            sql = "insert into customers (customer_username, customer_firstname, customer_lastname, customer_password) values (%s, %s, %s, %s)"
             val = (_username, _firstname, _lastname, _password)
             cursor.execute(sql, val)
 
             # get information
-            sql = "select * from customers where c_username = %s"
+            sql = "select * from customers where customer_username = %s"
             val = _username
             cursor.execute(sql, val)
             data = cursor.fetchall()
@@ -130,10 +130,10 @@ def customerHome():
         conn = mysql.connect()
         cursor = conn.cursor()
 
-        # customers: customer_id, c_username, c_firstname, c_lastname, c_password, timestamp
+        # customers: customer_id, customer_username, customer_firstname, customer_lastname, customer_password, timestamp
 
         # get customer's information
-        sql = "select customer_id, c_username, c_firstname, c_lastname from customers where customer_id = %s"
+        sql = "select customer_id, customer_username, customer_firstname, customer_lastname from customers where customer_id = %s"
         val = cid
         cursor.execute(sql, cid)
         data = cursor.fetchall()
@@ -143,8 +143,11 @@ def customerHome():
         conn.close()
 
         # parameters
-        user_info = {"User Name": data[0][1], "First Name": data[0][2], "Last Name": data[0][3]}
-        return render_template('customerHome.html', user_info = user_info)
+        if data:
+            user_info = {"User Name": data[0][1], "First Name": data[0][2], "Last Name": data[0][3]}
+            return render_template('customerHome.html', user_info = user_info)
+        else:
+            return redirect('/showSignIn')
 
     else:
         return render_template('error.html', error='Unauthorized Access')
