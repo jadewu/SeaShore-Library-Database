@@ -1,25 +1,12 @@
-from flask import Flask, render_template, request, json, redirect, session, url_for, jsonify
-from flaskext.mysql import MySQL
-from werkzeug.security import generate_password_hash, check_password_hash
-from datetime import datetime
-import html
-# html.escape() can be used to avoid XSS, but because of current bootstrap,
-# it is not convinient to show on original characters on html files
-
+from init import *
+from modules.homePage import home_page
+from modules.signIn import sign_in
+from modules.signUp import sign_up
 
 app = Flask(__name__)
-mysql = MySQL()
-
-app.secret_key = 'seashore-library-webpages'
-
-# MySQL config
-app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = '2020DB!!'
-app.config['MYSQL_DATABASE_DB'] = 'SeaShore'
-app.config['MYSQL_DATABASE_HOST'] = 'localhost'
-mysql.init_app(app)
-print("-----Established Database Connection-----")
-
+app.register_blueprint(home_page)
+app.register_blueprint(sign_in)
+app.register_blueprint(sign_up)
 
 
 @app.route('/')
@@ -34,123 +21,56 @@ def account():
     else:
         return redirect('/showSignIn')
 
-@app.route('/showSignIn')
-def showSignIn():
-    return render_template('signIn.html')
-
-@app.route('/validateLogIn', methods=['POST'])
-def validateLogIn():
-    try:
-        # print(request.url)
-        # print(request.form)
-
-        _username = request.form['inputUsername']
-        _password = request.form['inputPassword']
-
-        # connect to MySQL
-        conn = mysql.connect()
-        cursor = conn.cursor()
-        # customers: customer_id, customer_username, customer_firstname, customer_lastname, customer_password, timestamp
-        sql = "select * from customers where customer_username = %s"
-        val = _username
-        cursor.execute(sql, val)
-        data = cursor.fetchall()
-
-        if len(data) > 0:
-            print(data[0])
-            #if check_password_hash(str(data[0][4]),_password):
-            if _password == data[0][4]:
-                session['user'] = data[0][0] # log user into session
-                return redirect('/customerHome')
-            else:
-                return render_template('error.html',error = 'Wrong Password.')
-        else:
-            return render_template('error.html',error = 'Wrong Username.')
-
-    except Exception as e:
-        return render_template('error.html',error = str(e))
-    finally:
-        cursor.close()
-        conn.close()
-
 
 @app.route('/showSignUp')
 def showSignUp():
     return render_template('signUp.html')
 
+@app.route('/showBooks')
+def showBooks():
+    # 1. show all books -> <LINK> storage -> book_storages ([Link] -> request.html(get))
+    #               [book_name, author_name]
+    # 2. search by book name -> show all book_storages() of this book ([Link] -> request.html(get))
+    return render_template('signUp.html')
 
-@app.route('/signUp',methods=['POST','GET'])
-def signUp():
-    try:
-        # print(request.url)
-        # print(request.args)
 
-        _username = request.form['inputUsername']
-        _firstname = request.form['inputFirstname']
-        _lastname = request.form['inputLastname']
-        _password = request.form['inputPassword']
+@app.route('/newRequest')
+def newRequest():
+    # with book_storage_id
+    # if(isBorrowed) -> [waiting list page]:'you will be notified once the book returned', button 'confirm'
+    #                           -> request (status = 'W')
 
-        if _username and _firstname and _lastname and _password:
-            conn = mysql.connect()
-            cursor = conn.cursor()
-            # _hashed_password = generate_password_hash(_password)
+    # form
+    # start_time, stop_time -> 'confirm'[LINK](bill) -> newBill
+    return render_template('signUp.html')
 
-            # customers: customer_id, customer_username, customer_firstname, customer_lastname, customer_password, timestamp
-            # insert information
-            sql = "insert into customers (customer_username, customer_firstname, customer_lastname, customer_password) values (%s, %s, %s, %s)"
-            val = (_username, _firstname, _lastname, _password)
-            cursor.execute(sql, val)
+@app.route('/newBill')
+def newBill():
+    # calculate amount
+    # store bill in db 
 
-            # get information
-            sql = "select * from customers where customer_username = %s"
-            val = _username
-            cursor.execute(sql, val)
-            data = cursor.fetchall()
+    # show amount
+    # 'pay'[LINKE] -> receipt
+    return render_template('signUp.html')
 
-            conn.commit()
-            cursor.close()
-            conn.close()
+@app.route('/receipt')
+def receipt():
+    # store receipt in db
 
-            session['user'] = data[0][0]
-            print(data)
-            return json.dumps({'response': "user"})
+    # show receipt
+    return render_template('signUp.html')
 
-        else:
-            return json.dumps({'response':'Enter the required fields'})
+@app.route('/changeProfile')
+def changeProfile():
+    # store receipt in db
 
-    except Exception as e:
-        return json.dumps({'error':str(e)})
+    # show receipt
+    return render_template('signUp.html')
 
-@app.route('/customerHome')
-def customerHome():
-    if session.get('user'):
-        cid = session.get('user')
-        print("customer id: ", cid)
-
-        conn = mysql.connect()
-        cursor = conn.cursor()
-
-        # customers: customer_id, customer_username, customer_firstname, customer_lastname, customer_password, timestamp
-
-        # get customer's information
-        sql = "select customer_id, customer_username, customer_firstname, customer_lastname from customers where customer_id = %s"
-        val = cid
-        cursor.execute(sql, cid)
-        data = cursor.fetchall()
-
-        conn.commit()
-        cursor.close()
-        conn.close()
-
-        # parameters
-        if data:
-            user_info = {"User Name": data[0][1], "First Name": data[0][2], "Last Name": data[0][3]}
-            return render_template('customerHome.html', user_info = user_info)
-        else:
-            return redirect('/showSignIn')
-
-    else:
-        return render_template('error.html', error='Unauthorized Access')
+@app.route('/showRooms')
+def showRooms():
+    # show all rooms 'floor', 'postition' -> 
+    return render_template('signUp.html')
 
 
 # log out current user
@@ -160,6 +80,28 @@ def logout():
     return redirect('/')
 
 
+""" Waiting List Logic:
+        Once a book returned, assume returned book re_book_sto_id
+
+        select requests
+        where book_sto_id = re_book_sto_id, status = W
+        order by last_edit_time
+"""
+"""
+    select date, beforeNoon
+    where room_id = room1, date, beforeNoon
+    reservations:
+    input: currentdate- 9.22
+            reservations: date, beforeNoon
+            
+    dates = [9.22,]
+    beforeNoons = [1,]
+
+    df = day_different(9.22,dates[0])   0
+    x = (int)!beforeNoons[0]            0
+
+    A[0,0,0,1,0,0]
+"""
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port='5000', debug=True)

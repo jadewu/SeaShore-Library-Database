@@ -3,11 +3,11 @@
 {% block content %}
     <body class="text-center">
         <div class="row justify-content-center">
-        <form class="form-signup">
+        <form class="form-signup" action="/signIn">
                 <p>Please fill in this form to create an account.</p>
             <br>
             <p>Username:<label for="inputUsername" class="sr-only">Username</label>
-            <input type="name" name="inputUsername" id="inputUsername" class="form-control" placeholder="Username" required autofocus></p>
+            <input type="name" name="inputUsername" id="inputUsername" class="form-control" placeholder="Username" required></p>
 
             <p>First Name:<label for="inputFirstname" class="sr-only">Firstname</label>
             <input type="name" name="inputFirstname" id="inputFirstname" class="form-control" placeholder="First name" required></p>
@@ -17,7 +17,18 @@
 
             <p>Password:<label for="inputPassword" class="sr-only">Password</label>
             <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" required></p>
-
+            <p style = "font-size: 1em">
+                Should have at least one number.
+            <p/>
+            <p style = "font-size: 1em">
+                Should have at least one uppercase and one lowercase character.
+            <p/>
+            <p style = "font-size: 1em">
+                Should have at least one symbol from @$!%*#?&.
+            <p/>
+            <p style = "font-size: 1em">
+                Should be between 6 to 20 characters long.
+            <p/>
             <br>
 
             <button id="btnSignUp" class="btn btn-lg btn-primary mx-auto btn-block" type="button">Sign Up</button>
