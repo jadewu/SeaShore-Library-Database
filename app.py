@@ -8,19 +8,22 @@ app.register_blueprint(home_page)
 app.register_blueprint(sign_in)
 app.register_blueprint(sign_up)
 
+from flask import Flask, render_template, request, json, redirect, session, blueprints
+from flaskext.mysql import MySQL
+from flask.blueprints import Blueprint
+import re
+# html.escape() can be used to avoid XSS, but because of current bootstrap,
+# it is not convinient to show on original characters on html files
+
+# Customized functions in modules
+
+
+app.secret_key = 'seashore-library-secrete-key'
+
 
 @app.route('/')
 def index():
     return render_template('index.html')
-
-@app.route('/account')
-def account():
-    if session.get('user'):
-        print(session.get('user'))
-        return redirect('/customerHome')
-    else:
-        return redirect('/showSignIn')
-
 
 @app.route('/showSignUp')
 def showSignUp():

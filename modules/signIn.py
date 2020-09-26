@@ -2,10 +2,6 @@ from init import *
 from init.pattern import check_pattern
 sign_in = Blueprint('sign_in', __name__)
 
-@sign_in.route('/showSignIn')
-def showSignIn():
-    return render_template('signIn.html')
-
 @sign_in.route('/signIn', methods=['POST', 'GET'])
 def signIn():
     try:

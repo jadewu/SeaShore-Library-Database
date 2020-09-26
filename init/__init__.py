@@ -10,7 +10,7 @@ import re
 app = Flask(__name__)
 mysql = MySQL()
 
-app.secret_key = 'seashore-library-webpages'
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 # MySQL config
 app.config['MYSQL_DATABASE_USER'] = 'root'
