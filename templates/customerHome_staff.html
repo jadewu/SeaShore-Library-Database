@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+   <body>
+   <div class="show">
+
+    <table class="list">
+      <tr>
+        <th>customer_id</th>
+        <th>customer_username</th>
+        <th>customer_firstname</th>
+          <th>customer_lastname</th>
+        <th>Info</th>
+        </tr>
+
+        {% for info in user_info %}
+        <tr>
+          <td>{{info[0]}}</td>
+          <td>{{info[1]}}</td>
+
+          <td>{{info[2]}}</td>
+            <td>{{info[3]}}</td>
+          <td><a class="action" href="/signIn_staff">Requests</a></td>
+
+        </tr>
+        {% endfor %}
+    </table>
+  </div>
+   <p> You can <a href="/manageBook">manage books</a> from here. </p>
+   <p> You can <a href="/manageEvent">manage events</a> from here. </p>
+   <p> You can <a href="/logout_staff">log out</a> from here. </p>
+
+
+   </body>
+
+{% endblock %}

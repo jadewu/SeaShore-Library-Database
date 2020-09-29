@@ -4,13 +4,29 @@ from modules.signIn import sign_in
 from modules.signUp import sign_up
 from modules.resources import res
 from modules.bookStorage import sto
-from multiprocessing.pool import ThreadPool
+
+from modules.signIn_staff import sign_in_staff
+from modules.signUp_staff import sign_up_staff
+from modules.homePage_staff import home_page_staff
+from modules.manageEvent import manage_event
+from modules.newEvent import new_event
+from modules.manageBook import manage_book
+from modules.newBook import new_book
+
 app = Flask(__name__)
 app.register_blueprint(home_page)
 app.register_blueprint(sign_in)
 app.register_blueprint(sign_up)
 app.register_blueprint(res)
 app.register_blueprint(sto)
+
+app.register_blueprint(home_page_staff)
+app.register_blueprint(sign_in_staff)
+app.register_blueprint(sign_up_staff)
+app.register_blueprint(manage_event)
+app.register_blueprint(new_event)
+app.register_blueprint(manage_book)
+app.register_blueprint(new_book)
 
 from flask import Flask, render_template, request, json, redirect, session, blueprints
 from flaskext.mysql import MySQL
@@ -74,6 +90,12 @@ def showRooms():
 @app.route('/logout')
 def logout():
     session.pop('user', None)
+    return redirect('/')
+
+# log out current user
+@app.route('/logout_staff')
+def logout_staff():
+    session.pop('staff', None)
     return redirect('/')
 
 
