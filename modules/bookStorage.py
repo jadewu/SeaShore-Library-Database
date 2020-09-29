@@ -23,24 +23,24 @@ def bookStorage():
     # 2. search by book name -> show all book_storages() of this book ([Link] -> request.html(get))
     return render_template('resources.html', data = data)
 
-@res.route('/searchBook',methods=['POST','GET'])
-def searchBook():
-    _bookname = request.form['inputBookname']
-
-    conn = mysql.connect()
-    cursor = conn.cursor()
-
-    # get all books whose name includes the input
-
-    sql = "select * from books where book_name like %s limit 10;"
-    val = "%" + _bookname + "%"
-    cursor.execute(sql, val)
-    data = cursor.fetchall()
-
-    conn.commit()
-    cursor.close()
-    conn.close()
-
-    print(data)
-    return render_template('resources.html', data = data)
-
+# @res.route('/searchBook',methods=['POST','GET'])
+# def searchBook():
+#     _bookname = request.form['inputBookname']
+#
+#     conn = mysql.connect()
+#     cursor = conn.cursor()
+#
+#     # get all books whose name includes the input
+#
+#     sql = "select * from books where book_name like %s limit 10;"
+#     val = "%" + _bookname + "%"
+#     cursor.execute(sql, val)
+#     data = cursor.fetchall()
+#
+#     conn.commit()
+#     cursor.close()
+#     conn.close()
+#
+#     print(data)
+#     return render_template('resources.html', data = data)
+#

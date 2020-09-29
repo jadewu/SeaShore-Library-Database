@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, json, redirect, session, blueprints
+from flask import Flask, render_template, request, json, redirect, session, blueprints, url_for, flash
+from datetime import datetime
 from flaskext.mysql import MySQL
 from flask.blueprints import Blueprint
 import re
@@ -14,7 +15,7 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 # MySQL config
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = '2020DB!!'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'password'
 app.config['MYSQL_DATABASE_DB'] = 'SeaShore'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
