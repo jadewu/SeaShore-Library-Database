@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block page_title %}  {% endblock %}
+
+{% block content %}
+
+<body class="text-center">
+<!--Search Function-->
+    <div class="row justify-content-center">
+    <br/>
+    <form class="form-search" action="/searchBook" method="post">
+
+        <div>
+            <i class="fas fa-search h4 text-body"></i>
+        </div>
+        <div>
+            <label for="inputBookname" class="sr-only">Search Book Name</label>
+            <input class="form-control form-control-lg form-control-borderless" type="search" name="inputBookname" id="inputBookname" placeholder="Enter Book Name">
+        </div>
+        <br>
+
+    </form>
+    </div>
+    <br>
+<!--    Show Books-->
+    <div class="row justify-content-center">
+        {% for i in range(data|length//2) %}
+          <div class="column">
+              <p><a href="/bookStorage"> {{data[i][1]}} </a></p>
+              <p> {{data[i][2]}} {{data[i][3]}} </p>
+          </div>
+        {% endfor %}
+        {% for i in range(data|length//2, data|length) %}
+          <div class="column">
+              <p><a href="/bookStorage" id=data[i][0]> {{data[i][1]}} </a></p>
+              <p> {{data[i][2]}} {{data[i][3]}} </p>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+</body>
+{% endblock %}

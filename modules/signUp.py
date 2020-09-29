@@ -19,9 +19,9 @@ def signUp():
 
         if not check_pattern(_username, "str"):
             return json.dumps({'response': 'Enter valid Username'})
-        if not check_pattern(_firstname, "str"):
+        if not check_pattern(_firstname, "letter"):
             return json.dumps({'response': 'Enter valid First Name'})
-        if not check_pattern(_lastname, "str"):
+        if not check_pattern(_lastname, "letter"):
             return json.dumps({'response': 'Enter valid Last Name'})
         if not check_pattern(_password, "pwd"):
             return json.dumps({'response': 'Enter valid Password'})

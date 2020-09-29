@@ -2,11 +2,15 @@ from init import *
 from modules.homePage import home_page
 from modules.signIn import sign_in
 from modules.signUp import sign_up
-
+from modules.resources import res
+from modules.bookStorage import sto
+from multiprocessing.pool import ThreadPool
 app = Flask(__name__)
 app.register_blueprint(home_page)
 app.register_blueprint(sign_in)
 app.register_blueprint(sign_up)
+app.register_blueprint(res)
+app.register_blueprint(sto)
 
 from flask import Flask, render_template, request, json, redirect, session, blueprints
 from flaskext.mysql import MySQL
@@ -28,14 +32,6 @@ def index():
 @app.route('/showSignUp')
 def showSignUp():
     return render_template('signUp.html')
-
-@app.route('/showBooks')
-def showBooks():
-    # 1. show all books -> <LINK> storage -> book_storages ([Link] -> request.html(get))
-    #               [book_name, author_name]
-    # 2. search by book name -> show all book_storages() of this book ([Link] -> request.html(get))
-    return render_template('signUp.html')
-
 
 @app.route('/newRequest')
 def newRequest():
@@ -65,9 +61,7 @@ def receipt():
 
 @app.route('/changeProfile')
 def changeProfile():
-    # store receipt in db
 
-    # show receipt
     return render_template('signUp.html')
 
 @app.route('/showRooms')
