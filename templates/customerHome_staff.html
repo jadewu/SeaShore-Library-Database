@@ -2,9 +2,32 @@
 
 {% block content %}
    <body>
-   <div class="show">
+   {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+   <div class="row justify-content-center">
+    <form class="form-search" action="/staffHome" method="post">
+        <br/>
+        <p>First Name:<label for="cust_first_name" class="sr-only">Username</label>
+        <input type="name" name="cust_first_name" id="cust_first_name" class="form-control" required></p>
 
-    <table class="list">
+        <p>Last Name:<label for="cust_last_name" class="sr-only">Firstname</label>
+        <input type="name" name="cust_last_name" id="cust_last_name" class="form-control"  required></p>
+        <div id="operations">
+            <input type="submit" value="Search" />
+        </div>
+        <br>
+
+    </form>
+    </div>
+   <p> Customers information: </p>
+     <table class="table table-customers-information">
       <tr>
         <th>customer_id</th>
         <th>customer_username</th>
@@ -20,15 +43,33 @@
 
           <td>{{info[2]}}</td>
             <td>{{info[3]}}</td>
-          <td><a class="action" href="/signIn_staff">Requests</a></td>
+          <td><a class="action" href="/checkRequest_staff?id={{info[0]}}">Requests</a></td>
 
         </tr>
         {% endfor %}
     </table>
-  </div>
+   <p> Current user information: </p>
+    <table class="table table-employee-information">
+      <tr>
+        <th>my_id</th>
+        <th>my_username</th>
+        <th>my_firstname</th>
+          <th>my_lastname</th>
+          <th>change information</th>
+        </tr>
+
+        <tr>
+            {% for info in personal_info[0] %}
+                <td>{{info}}</td>
+            {% endfor %}
+            <td><a class="action" href="/changeInfo_staff">change</a></td>
+        </tr>
+
+    </table>
    <p> You can <a href="/manageBook">manage books</a> from here. </p>
    <p> You can <a href="/manageEvent">manage events</a> from here. </p>
    <p> You can <a href="/logout_staff">log out</a> from here. </p>
+
 
 
    </body>

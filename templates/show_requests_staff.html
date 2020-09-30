@@ -11,7 +11,7 @@
             </ul>
           {% endif %}
         {% endwith %}
-      <table class="table table-event-information">
+      <table class="table requests-information">
 
           <tr>
               {% for header in headers %}
@@ -22,19 +22,24 @@
                    </strong>
                </td>
               {% endfor %}
+              <td>
+                   <strong>
+                       <span class="glyphicon glyphicon-asterisk text-primary"></span>
+                       Operation
+                   </strong>
+               </td>
           </tr>
-          {% for line in book_info %}
+          {% for line in request_info %}
             <tr>
                 {% for value in line %}
                    <td class="text-primary">
                        {{ value }}
                    </td>
                 {% endfor %}
-
+                <td><a class="action" href="/deleteRequest_staff?id={{line[0]}}">Delete</a></td>
             </tr>
           {% endfor %}
       </table>
-   <p> You <a href="/newBook">add new books</a> from here. </p>
    </body>
 
 {% endblock %}
