@@ -12,6 +12,9 @@ from modules.manageEvent import manage_event
 from modules.newEvent import new_event
 from modules.manageBook import manage_book
 from modules.newBook import new_book
+from modules.changeInfo_staff import change_info_staff
+from modules.checkRequest_staff import check_request_staff
+from modules.deleteRequest_staff import delete_request_staff
 
 app = Flask(__name__)
 app.register_blueprint(home_page)
@@ -27,6 +30,9 @@ app.register_blueprint(manage_event)
 app.register_blueprint(new_event)
 app.register_blueprint(manage_book)
 app.register_blueprint(new_book)
+app.register_blueprint(change_info_staff)
+app.register_blueprint(check_request_staff)
+app.register_blueprint(delete_request_staff)
 
 from flask import Flask, render_template, request, json, redirect, session, blueprints
 from flaskext.mysql import MySQL
