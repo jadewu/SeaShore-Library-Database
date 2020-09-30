@@ -1,46 +1,35 @@
 from init import *
 from init.pattern import check_pattern
+
 sto = Blueprint('sto', __name__)
 
 
-@sto.route('/bookStorage')
-def bookStorage():
+@sto.route('/bookStorage/<_bookId>', methods=['GET'])
+def bookStorage(_bookId):
     # get book id
-    book_id = request.args.get("id")
+    print(_bookId)
     conn = mysql.connect()
     cursor = conn.cursor()
 
-    sql = "select * from books limit 10;"
-    cursor.execute(sql)
+    # get room info of the copy
+    sql = "select a.book_sto_id, a.instock, a.shelf_id, a.shelf_level, b.room_id from books_storage a join shelves b on " \
+          "a.shelf_id = b.shelf_id where a.book_id = %s order by a.book_sto_id; "
+    val = _bookId
+    cursor.execute(sql, val)
     data = cursor.fetchall()
 
     conn.commit()
     cursor.close()
     conn.close()
-    print(data)
-    # 1. show all books -> <LINK> storage -> book_storages ([Link] -> request.html(get))
-    #               [book_name, author_name]
-    # 2. search by book name -> show all book_storages() of this book ([Link] -> request.html(get))
-    return render_template('resources.html', data = data)
+    sto_info_insto = []
+    sto_info_ninsto = []
 
-# @res.route('/searchBook',methods=['POST','GET'])
-# def searchBook():
-#     _bookname = request.form['inputBookname']
-#
-#     conn = mysql.connect()
-#     cursor = conn.cursor()
-#
-#     # get all books whose name includes the input
-#
-#     sql = "select * from books where book_name like %s limit 10;"
-#     val = "%" + _bookname + "%"
-#     cursor.execute(sql, val)
-#     data = cursor.fetchall()
-#
-#     conn.commit()
-#     cursor.close()
-#     conn.close()
-#
-#     print(data)
-#     return render_template('resources.html', data = data)
-#
+    for copy in data:
+        if copy[1] == 'Y':
+            sto_info_insto.append(copy)
+        else:
+            sto_info_ninsto.append(copy)
+    print(sto_info_insto)
+    print(sto_info_ninsto)
+
+    return render_template('bookStorage.html', sto_info_insto=sto_info_insto, sto_info_ninsto=sto_info_ninsto)

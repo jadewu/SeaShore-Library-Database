@@ -25,14 +25,19 @@
     <div class="row justify-content-center">
         {% for i in range(data|length//2) %}
           <div class="column">
-              <p><a href="/bookStorage"> {{data[i][1]}} </a></p>
-              <p> {{data[i][2]}} {{data[i][3]}} </p>
+              <p> Book: <a href="{{ url_for('sto.bookStorage', _bookId=data[i][0]) }}"> {{data[i][1]}} </a></p>
+              <p> Author: {{data[i][2]}} {{data[i][3]}} </p>
           </div>
         {% endfor %}
         {% for i in range(data|length//2, data|length) %}
           <div class="column">
+
               <p><a href="/bookStorage?id={{data[i][0]}}"> {{data[i][1]}} </a></p>
               <p> {{data[i][2]}} {{data[i][3]}} </p>
+
+              <p> Book: <a href="{{ url_for('sto.bookStorage', _bookId=data[i][0]) }}"> {{data[i][1]}} </a></p>
+              <p> Author: {{data[i][2]}} {{data[i][3]}} </p>
+
           </div>
         {% endfor %}
       </div>

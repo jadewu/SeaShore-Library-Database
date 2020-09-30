@@ -11,7 +11,6 @@ def signUp():
     try:
         # print(request.url)
         # print(request.args)
-
         _username = request.form['inputUsername']
         _firstname = request.form['inputFirstname']
         _lastname = request.form['inputLastname']
@@ -25,7 +24,7 @@ def signUp():
             return json.dumps({'response': 'Enter valid Last Name'})
         if not check_pattern(_password, "pwd"):
             return json.dumps({'response': 'Enter valid Password'})
-
+        print("here1")
         conn = mysql.connect()
         cursor = conn.cursor()
         # _hashed_password = generate_password_hash(_password)

@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <body class="text-center">
+        <div class="container">
+            <div class="row">
+            <div class="col-sm">
+                 <table class="table table-user-information">
+                <tr><td><strong><span class="glyphicon glyphicon-asterisk text-primary"></span>
+                           Bill ID</strong></td>
+                   <td class="text-primary">{{bill_info[0]}}</td>
+                </tr>
+               <tr><td><strong><span class="glyphicon glyphicon-asterisk text-primary"></span>
+                           Request ID</strong></td>
+                   <td class="text-primary">{{bill_info[3]}}</td>
+                </tr>
+               <tr><td><strong><span class="glyphicon glyphicon-asterisk text-primary"></span>
+                           Issue Time</strong></td>
+                   <td class="text-primary">{{bill_info[2]}}</td>
+                </tr>
+               <tr><td><strong><span class="glyphicon glyphicon-asterisk text-primary"></span>
+                           Bill Amount</strong></td>
+                   <td class="text-primary">{{bill_info[1]}}</td>
+                </tr>
+                </table>
+            </div>
+            <div class="col-sm">
+                <form id="pay_form", method="POST">
+                <div>
+                    <label for="pay_method">Mayment Method</label>
+                    <select class="form-control" name="pay_method" id="pay_method">
+                      <option value="paypal">PayPal</option>
+                      <option value="credit">Credit Card</option>
+                      <option value="debit">Debit Card</option>
+                      <option value="check">Check</option>
+                    </select>
+                </div><br>
+
+                <p>Cardholder</p>
+                <div class="row">
+                    <div class="col">First Name
+                      <input type="text" class="form-control" name="firstname" id="firstname">
+                    </div>
+                    <div class="col">Last Name
+                      <input type="text" class="form-control" name="lastname" id="lastname">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">Card Number
+                      <input type="text" class="form-control" name="card_number" id="card_number">
+                    </div>
+                    <div class="col">Security Code CVV
+                      <input type="text" class="form-control" name="cvv" id="cvv">
+                    </div>
+                </div><br>
+
+            <div id="operations">
+                <input type="submit" value="Pay" />
+            </div>
+
+                </form>
+                </div>
+        </div>
+            <br>
+        </div>
+    </body>
+
+
+{% endblock %}

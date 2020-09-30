@@ -1,10 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block content %}
+    <body class="text-center">
+        <div class="row justify-content-center">
+        <form class="form-req" action='/cusRequest', method="POST">
+                <p>Please fill in this form to create a request.</p>
+            <br>
+            <p>Book Storage ID:<label for="bookstoID" class="sr-only">Book Sto ID</label>
+            <input type="name" name="bookstoID" id="bookstoID" class="form-control" placeholder="{{booksto_id}}" required></p>
+
+            <div class="row">
+                <div class="col">Start Date
+                  <input type="date" class="form-control" name="reqStartDate" id="reqStartDate" placeholder="MM-DD-YYYY" required>
+                </div>
+                <div class="col">Stop Date
+                  <input type="date" class="form-control" name="reqStopDate" id="reqStopDate" placeholder="MM-DD-YYYY" required>
+                </div>
+            </div>
+
+            <br>
+
+            <div id="operations">
+                <input type="submit" value="Request" />
+            </div>
+            <br>
+        </form>
+        </div>
+    </body>
+
+
+{% endblock %}
