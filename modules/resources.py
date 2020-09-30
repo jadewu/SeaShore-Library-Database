@@ -17,9 +17,6 @@ def showResources():
     cursor.close()
     conn.close()
     print(data)
-    # 1. show all books -> <LINK> storage -> book_storages ([Link] -> request.html(get))
-    #               [book_name, author_name]
-    # 2. search by book name -> show all book_storages() of this book ([Link] -> request.html(get))
     return render_template('resources.html', data = data)
 
 @res.route('/searchBook',methods=['POST','GET'])
