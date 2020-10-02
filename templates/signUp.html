@@ -15,6 +15,13 @@
             <p>Last Name:<label for="inputLastname" class="sr-only">Lastname</label>
             <input type="name" name="inputLastname" id="inputLastname" class="form-control" placeholder="Last name" required></p>
 
+            <label for="inputQuestion">Security Question</label>
+              <select name="inputQuestion" id="inputQuestion" class="form-control" class="form-control" required>
+                  {% for question in questions%}
+                    <option> {{question[0]}} </option>
+                  {% endfor %}
+              </select>
+
             <p>Password:<label for="inputPassword" class="sr-only">Password</label>
             <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" required></p>
             <p style = "font-size: 1em">

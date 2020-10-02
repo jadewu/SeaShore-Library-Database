@@ -9,7 +9,7 @@
     <div class="row justify-content-center">
         {% for i in range(sto_info_insto|length//2) %}
           <div class="column">
-              <p><a href="{{ url_for('req.showRequest', _bookStoId=sto_info_insto[i][0]) }}"> Copy {{sto_info_insto[i][0]}} </a></p>
+              <p><a href="/cusRequest?_bookStoId={{sto_info_insto[i][0]}}"> Copy {{sto_info_insto[i][0]}} </a></p>
               <p> Instock: {{sto_info_insto[i][1]}} </p>
               <p> Shelf ID: {{sto_info_insto[i][2]}} </p>
               <p> Shelf Level: {{sto_info_insto[i][3]}} </p>
@@ -18,7 +18,7 @@
         {% endfor %}
         {% for i in range(sto_info_insto|length//2, sto_info_insto|length) %}
           <div class="column">
-              <p><a href="{{ url_for('req.showRequest', _bookStoId=sto_info_insto[i][0]) }}"> Copy {{sto_info_insto[i][0]}} </a></p>
+              <p><a href="/cusRequest?_bookStoId={{sto_info_insto[i][0]}}"> Copy {{sto_info_insto[i][0]}} </a></p>
               <p> Instock: {{sto_info_insto[i][1]}} </p>
               <p> Shelf ID: {{sto_info_insto[i][2]}} </p>
               <p> Shelf Level: {{sto_info_insto[i][3]}} </p>

@@ -30,4 +30,4 @@ def customerHome():
         user_info = {"User Name": data[0][1], "First Name": data[0][2], "Last Name": data[0][3]}
         return render_template('customerHome.html', user_info = user_info)
     else:
-        return render_template('signIn.html')
+        return redirect('/signIn')
