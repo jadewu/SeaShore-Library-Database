@@ -2,13 +2,15 @@ from init import *
 from init.pattern import check_pattern
 receipt = Blueprint('receipt', __name__)
 
-@receipt.route('/showReceipt')
+@receipt.route('/showReceipt', methods=['POST','GET'])
 def showReceipt():
     # show receipt
+    bill_id  = request.args.get('bill_id')
     conn = mysql.connect()
     cursor = conn.cursor()
-    sql = "select * from receipts where receipt_id = (select max(receipt_id) from receipts)"
-    cursor.execute(sql)
+    sql = "select * from receipts where bill_id = %s"
+    val = bill_id
+    cursor.execute(sql, val)
     data = cursor.fetchall()
     print(data)
     conn.commit()

@@ -38,7 +38,7 @@ def newBook():
         # _instock = 'Y'
         _sc = 1
         # insert information
-        sql = "insert into books_storage (shelves_level, book_id, shelf_id) values (%s,%s,%s)"
+        sql = "insert into books_storage (shelf_level, book_id, shelf_id) values (%s,%s,%s)"
         val = (_sc, book_id, _shelfid)
         for i in range(int(_copies)):
             cursor.execute(sql, val)

@@ -9,6 +9,8 @@ def signUp_staff():
         _firstname = request.form['inputFirstname']
         _lastname = request.form['inputLastname']
         _password = request.form['inputPassword']
+        _question = request.form['inputQuestion']
+        _answer = request.form['inputAnswer']
         error = ""
         if not check_pattern(_username, "str"):
             error += 'Enter valid Username; '
@@ -39,8 +41,8 @@ def signUp_staff():
             return redirect('/signUp_staff')
 
         # insert information
-        sql = "insert into employees (employee_username, employee_firstname, employee_lastname, employee_password) values (%s, %s, %s, %s)"
-        val = (_username, _firstname, _lastname, _password)
+        sql = "insert into employees (employee_username, employee_firstname, employee_lastname, employee_password, question, employee_answer) values (%s, %s, %s, %s, %s, %s)"
+        val = (_username, _firstname, _lastname, _password, _question, _answer)
         cursor.execute(sql, val)
 
         # get information
@@ -56,4 +58,17 @@ def signUp_staff():
         session['staff'] = data[0][0]
         return redirect('/signIn_staff')
     else:
-        return render_template('signUp_staff.html')
+
+        conn = mysql.connect()
+        cursor = conn.cursor()
+
+        # get questions
+        sql = "select * from questions"
+        cursor.execute(sql)
+        questions = cursor.fetchall()
+
+        conn.commit()
+        cursor.close()
+        conn.close()
+
+        return render_template('signUp_staff.html', questions = questions)

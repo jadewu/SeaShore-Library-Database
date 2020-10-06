@@ -5,7 +5,6 @@ from modules.signUp import sign_up
 from modules.resources import res
 from modules.bookStorage import sto
 from modules.request import req
-from modules.waiting import wait
 from modules.bill import bill
 from modules.receipt import receipt
 
@@ -27,7 +26,6 @@ app.register_blueprint(sign_up)
 app.register_blueprint(res)
 app.register_blueprint(sto)
 app.register_blueprint(req)
-app.register_blueprint(wait)
 app.register_blueprint(bill)
 app.register_blueprint(receipt)
 

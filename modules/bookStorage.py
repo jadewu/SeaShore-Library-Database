@@ -16,20 +16,10 @@ def bookStorage(_bookId):
           "a.shelf_id = b.shelf_id where a.book_id = %s order by a.book_sto_id; "
     val = _bookId
     cursor.execute(sql, val)
-    data = cursor.fetchall()
+    sto_info_insto = cursor.fetchall()
 
     conn.commit()
     cursor.close()
     conn.close()
-    sto_info_insto = []
-    sto_info_ninsto = []
 
-    for copy in data:
-        if copy[1] == 'Y':
-            sto_info_insto.append(copy)
-        else:
-            sto_info_ninsto.append(copy)
-    print(sto_info_insto)
-    print(sto_info_ninsto)
-
-    return render_template('bookStorage.html', sto_info_insto=sto_info_insto, sto_info_ninsto=sto_info_ninsto)
+    return render_template('bookStorage.html', sto_info_insto=sto_info_insto)

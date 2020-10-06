@@ -28,6 +28,7 @@ def signUp():
             _lastname = request.form['inputLastname']
             _question = request.form['inputQuestion']
             _password = request.form['inputPassword']
+            _answer = request.form['inputAnswer']
 
             if not check_pattern(_username, "str"):
                 return json.dumps({'response': 'Enter valid Username'})
@@ -53,8 +54,8 @@ def signUp():
                 return json.dumps({'response': "Username Exists"})
 
             # insert information
-            sql = "insert into customers (customer_username, customer_firstname, customer_lastname, customer_password, question) values (%s, %s, %s, %s, %s)"
-            val = (_username, _firstname, _lastname, _password, _question)
+            sql = "insert into customers (customer_username, customer_firstname, customer_lastname, customer_password, question, customer_answer) values (%s, %s, %s, %s, %s, %s)"
+            val = (_username, _firstname, _lastname, _password, _question, _answer)
             cursor.execute(sql, val)
 
             # get information
