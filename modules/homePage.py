@@ -20,6 +20,7 @@ def customerHome():
         val = cid
         cursor.execute(sql, val)
         data = cursor.fetchall()
+        user_info = {"User Name": data[0][1], "First Name": data[0][2], "Last Name": data[0][3]}
 
         # get customer's requests
         sql = "select a.request_id, request_status, request_start, request_stop, a.book_sto_id, book_name, " \
@@ -27,17 +28,23 @@ def customerHome():
               "a.book_sto_id = b.book_sto_id and b.book_id = c.book_id and a.request_id = d.request_id "
         val = cid
         cursor.execute(sql, val)
-        cols = (("ID", "Status", "Start", "Stop", "Book Storage ID", "Book Name", "Receipt", "Operation"))
+        req_cols = (("ID", "Status", "Start", "Stop", "Book Storage ID", "Book Name", "Receipt", "Operation"))
         requests = cursor.fetchall()
 
-        sql = "select bill_id from bills"
+        # get customer's reservations
+        sql = "select a.reservation_id, reservation_date, room_id from reservations as a, rooms_has_reservations as b " \
+              "where a.customer_id = %s and a.reservation_id = b.reservation_id; "
+        val = cid
+        cursor.execute(sql, val)
+        reservations = cursor.fetchall()
+        res_cols = ("ID", "Date", "Room")
 
         conn.commit()
         cursor.close()
         conn.close()
         print(requests)
-        # parameters
-        user_info = {"User Name": data[0][1], "First Name": data[0][2], "Last Name": data[0][3]}
-        return render_template('customerHome.html', user_info=user_info, requests=requests, cols=cols)
+        print(reservations)
+
+        return render_template('customerHome.html', user_info=user_info, requests=requests, req_cols=req_cols, reservations=reservations, res_cols=res_cols)
     else:
         return redirect('/signIn')

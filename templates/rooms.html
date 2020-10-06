@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block page_title %}  {% endblock %}
+
+{% block content %}
+
+<body class="text-center">
+
+<!--  Show All Rooms  -->
+    <div class="row justify-content-center">
+        {% for key, val in rooms.items() %}
+
+        <div class="column">
+            <p> Floor {{key}}</p>
+
+            {% for i in range(val|length) %}
+                <p> <a href="/showDates?room_id={{val[i]}}"> {{val[i]}} </a></p>
+            {% endfor %}
+
+        </div>
+
+        {% endfor %}
+    </div>
+
+</body>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <body class="text-center">
+      <p> You have successfully reserved! </p>
+      <table class="table table-user-information">
+         {% for key, value in reservation_info.items() %}
+            <tr>
+               <td>
+                   <strong>
+                       <span class="glyphicon glyphicon-asterisk text-primary"></span>
+                       {{ key }}
+                   </strong>
+               </td>
+               <td class="text-primary">
+                   {{ value }}
+               </td>
+            </tr>
+         {% endfor %}
+      </table>
+    </body>
+
+
+{% endblock %}

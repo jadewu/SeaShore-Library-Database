@@ -7,6 +7,7 @@ from modules.bookStorage import sto
 from modules.request import req
 from modules.bill import bill
 from modules.receipt import receipt
+from modules.reserveRoom import reserve
 
 from modules.signIn_staff import sign_in_staff
 from modules.signUp_staff import sign_up_staff
@@ -28,6 +29,7 @@ app.register_blueprint(sto)
 app.register_blueprint(req)
 app.register_blueprint(bill)
 app.register_blueprint(receipt)
+app.register_blueprint(reserve)
 
 app.register_blueprint(home_page_staff)
 app.register_blueprint(sign_in_staff)

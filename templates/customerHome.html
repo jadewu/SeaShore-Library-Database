@@ -23,7 +23,7 @@
       <table class="table">
           <thead>
           <tr>
-         {% for col in cols %}
+         {% for col in req_cols %}
               <th scope="col">{{col}}</th>
           {% endfor %}
            </tr>
@@ -32,7 +32,7 @@
           {% for i in range(requests|length) %}
             <tr>
                 <th scope="row">{{requests[i][0]}}</th>
-            {% for j in range(1, cols|length) %}
+            {% for j in range(1, req_cols|length) %}
                 {% if j == 6 %}
                     <td><a href="/showReceipt?bill_id={{requests[i][6]}}">Show</a></td>
                 {% elif j == 7 %}
@@ -45,6 +45,27 @@
                 {% else %}
                     <td>{{requests[i][j]}}</td>
                 {% endif %}
+            {% endfor %}
+            </tr>
+          {% endfor %}
+          </tbody>
+      </table>
+
+      <p> Reservations </p>
+      <table class="table">
+          <thead>
+          <tr>
+         {% for col in res_cols %}
+              <th scope="col">{{col}}</th>
+          {% endfor %}
+           </tr>
+          </thead>
+          <tbody>
+          {% for i in range(reservations|length) %}
+            <tr>
+                <th scope="row">{{reservations[i][0]}}</th>
+            {% for j in range(1, res_cols|length) %}
+                <td>{{reservations[i][j]}}</td>
             {% endfor %}
             </tr>
           {% endfor %}
