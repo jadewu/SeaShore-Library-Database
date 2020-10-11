@@ -40,7 +40,7 @@ def showDates():
 
     sql = "select datediff(reservation_date, curdate()) as diff from rooms_has_reservations a " \
           "join reservations b where a.room_id = %s and a.reservation_id = b.reservation_id and 0 <= datediff(" \
-          "b.reservation_date, curdate()) <= %s order by diff; "
+          "b.reservation_date, curdate()) and datediff(b.reservation_date, curdate()) <= %s order by diff; "
     val = (_roomID, _ndates)
     cursor.execute(sql, val)
     reserved = cursor.fetchall()

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block page_title %}  {% endblock %}
+
+{% block content %}
+
+<body class="text-center">
+
+{% if type == 'return' %}
+    {% if overdue < 0 %}
+        <p> The book is overdue for {{0-overdue}} days. </p>
+    {% else %}
+        <p> There are {{overdue}} days left. </p>
+    {% endif %}
+
+{% elif type == 'refuse' %}
+    <p> You will be removed from the waiting list of {{book}}. </p>
+
+{% endif %}
+
+<p> Are you sure? </p>
+<br>
+
+
+<p> <a href={{yes}}> Yes </a> </p>
+<p> <a href={{no}}> No </a> </p>
+
+
+</body>
+{% endblock %}

@@ -34,8 +34,10 @@ def cusRequest():
         #     for i in range(len(waiting_list)):
         #         if waiting_list[]
 
+        cols = ["#", "Request ID", "Request Start", "Customer ID"]
+
         if instock == 'N':
-            cols = ["#", "Request ID", "Request Start", "Customer ID"]
+            # cols = ["#", "Request ID", "Request Start", "Customer ID"]
 
             # check whether the customer has already requested for this storage
             flg = 1
@@ -57,6 +59,8 @@ def cusRequest():
         conn.close()
 
         if instock == 'Y' and (len(waiting_list) == 0 or _customer == waiting_list[0][2]):
+            if len(waiting_list) > 0:
+                session['waiting_for_delete_request'] = waiting_list[0][0]
             return render_template('request.html', booksto_id=_bookStoId)
         else:
             return render_template('waitingList.html', bookSto_id=_bookStoId, cols = cols, waiting_list = waiting_list)
@@ -69,10 +73,18 @@ def cusRequest():
         # if _start and _stop and _customer and _bookStoId:  # check all fields filled
         # MySQL ops
 
+
         conn = mysql.connect()
         cursor = conn.cursor()
 
-        # insert request, and the trigger in request will generate bill
+        # check whether there exists waiting request to be deleted (waiting_for_delete_request)
+        if session.get('waiting_for_delete_request'):
+            sql = "delete from requests where request_id = %s"
+            val = (session['waiting_for_delete_request'])
+            cursor.execute(sql, val)
+            session.pop('waiting_for_delete_request', None)
+
+        # insert request
         sql = "insert into requests (request_status, request_stop, customer_id, book_sto_id) values (%s, %s, %s, %s)"
         val = ('Y', _stop, _customer, _bookStoId)
         cursor.execute(sql, val)

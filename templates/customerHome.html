@@ -33,14 +33,32 @@
             <tr>
                 <th scope="row">{{requests[i][0]}}</th>
             {% for j in range(1, req_cols|length) %}
-                {% if j == 6 %}
-                    <td><a href="/showReceipt?bill_id={{requests[i][6]}}">Show</a></td>
-                {% elif j == 7 %}
-                    {% if requests[i][1] == 'W' %}
-                        <td><a href="/cusRequest?_bookStoId={{requests[i][4]}}">Request</a> or <a href="/refuseRequest?request_id={{requests[i][0]}}">Refuse</a></td>
+                {% if j == 3 %}
+                    {% if requests[i][3] == 'Y' %}
+                        <td> Issued </td>
+                    {% elif requests[i][3] == 'W' %}
+                        <td> Waiting </td>
+                    {% else %}
+                        <td> Finished </td>
                     {% endif %}
-                    {% if requests[i][1] == 'Y' %}
-                        <td><a href="/returnRequest?request_id={{requests[i][0]}}">Return</a></td>
+                {% elif j == 6 %}
+                    {% if requests[i][3] == 'Y' %}
+                        {% if requests[i][6] <= 0 %}
+                            <td> Yes </td>
+                        {% else %}
+                            <td> No </td>
+                        {% endif %}
+                    {% else %}
+                        <td> </td>
+                    {% endif %}
+                {% elif j == 7 %}
+                    <td><a href="/showReceipt?request_id={{requests[i][0]}}">Show</a></td>
+                {% elif j == 8 %}
+                    {% if requests[i][3] == 'W' %}
+                        <td><a href="/cusRequest?_bookStoId={{requests[i][2]}}">Request</a> or <a href="/confirmation?type=refuse&request_id={{requests[i][0]}}&book={{requests[i][1]}}">Refuse</a></td>
+                    {% endif %}
+                    {% if requests[i][3] == 'Y' %}
+                        <td><a href="/confirmation?type=return&request_id={{requests[i][0]}}&overdue={{requests[i][6]}}">Return</a></td>
                     {% endif %}
                 {% else %}
                     <td>{{requests[i][j]}}</td>
