@@ -2,9 +2,18 @@
 
 {% block content %}
     <body class="text-center">
+    {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
     <div class="row justify-content-center">
         <form class="form-signin_staff" style="width: 50%;" action="/signIn_staff" method="post">
-            <p>Log in terminal for staff></p>
+            <p>Log in terminal for staff</p>
 
             <br>
             <p>Username:<label for="inputUsername" class="sr-only">Username</label>
@@ -24,15 +33,8 @@
             <br>
         </form>
     </div>
-    {% with messages = get_flashed_messages() %}
-  {% if messages %}
-    <ul class=flashes>
-    {% for message in messages %}
-      <li>{{ message }}</li>
-    {% endfor %}
-    </ul>
-  {% endif %}
-{% endwith %}
+
+     <p> <a href="/enterUsername_staff">forget</a> your password? </p>
     </body>
 
 

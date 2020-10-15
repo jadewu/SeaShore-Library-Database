@@ -28,7 +28,7 @@ def signIn_staff():
             return redirect('/staffHome')
         else:
             flash("username or password incorrect")
-            return redirect('/staffHome')
+            return redirect('/signIn_staff')
 
     else:
         return render_template('signIn_staff.html')
