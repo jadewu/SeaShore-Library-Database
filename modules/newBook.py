@@ -4,6 +4,8 @@ new_book = Blueprint('new_book', __name__)
 
 @new_book.route('/newBook',methods=['POST','GET'])
 def newBook():
+    if not session.get('staff'):
+        return redirect('/signIn_staff')
     if request.method == 'POST':
         _bookname = request.form['bookName']
         _copies = request.form['copies']

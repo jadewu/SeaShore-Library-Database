@@ -4,6 +4,8 @@ new_event = Blueprint('new_event', __name__)
 
 @new_event.route('/newEvent',methods=['POST','GET'])
 def newEvent():
+    if not session.get('staff'):
+        return redirect('/signIn_staff')
     if request.method == 'POST':
         # _eventName = request.form['eventName']
         _eventType = request.form['eventType']

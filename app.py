@@ -20,6 +20,11 @@ from modules.newBook import new_book
 from modules.changeInfo_staff import change_info_staff
 from modules.checkRequest_staff import check_request_staff
 from modules.deleteRequest_staff import delete_request_staff
+from modules.changePassword_staff import change_password_staff
+from modules.enterUsername_staff import enter_username_staff
+from modules.enterUsername import enter_username
+from modules.changePassword import change_password
+from modules.newSecurityQuestion import new_security_question
 
 app = Flask(__name__)
 app.register_blueprint(home_page)
@@ -32,6 +37,8 @@ app.register_blueprint(bill)
 app.register_blueprint(receipt)
 app.register_blueprint(reserve)
 app.register_blueprint(confirm)
+app.register_blueprint(enter_username)
+app.register_blueprint(change_password)
 
 app.register_blueprint(home_page_staff)
 app.register_blueprint(sign_in_staff)
@@ -43,6 +50,9 @@ app.register_blueprint(new_book)
 app.register_blueprint(change_info_staff)
 app.register_blueprint(check_request_staff)
 app.register_blueprint(delete_request_staff)
+app.register_blueprint(change_password_staff)
+app.register_blueprint(enter_username_staff)
+app.register_blueprint(new_security_question)
 
 from flask import Flask, render_template, request, json, redirect, session, blueprints
 from flaskext.mysql import MySQL

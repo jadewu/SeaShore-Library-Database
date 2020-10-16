@@ -2,6 +2,15 @@
 
 {% block content %}
     <body class="text-center">
+    {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
     <div class="row justify-content-center">
         <form class="form-signin" style="width: 50%;" action="/signIn" method="post">
             <p>Welcome back.</p>
@@ -21,6 +30,7 @@
             <br>
         </form>
     </div>
+    <p> <a href="/enterUsername">Forget</a> your password? </p>
     </body>
 
 

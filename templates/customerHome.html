@@ -2,6 +2,15 @@
 
 {% block content %}
    <body>
+   {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
       <p> Personal Information </p>
       <table class="table table-user-information">
          {% for key, value in user_info.items() %}
@@ -91,6 +100,7 @@
       </table>
 
    <p> You can <a href="/logout">log out</a> from here. </p>
+   <p> You can <a href="/changePassword">change password</a> from here. </p>
    </body>
 
 {% endblock %}
