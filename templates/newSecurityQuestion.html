@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <body class="text-center">
+    {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+        <div class="row justify-content-center">
+        <form class="form-changeInfo_staff" style="width: 50%;" action="/newSecurityQuestion" method="post">
+                <p>Please fill in this form to add a new security question.</p>
+            <br>
+            <p>Question:<label for="question" class="sr-only">question</label>
+            <input type="question" name="question" id="question" class="form-control" required></p>
+
+            <div id="operations">
+                <input type="submit" value="Submit" />
+            </div>
+        </form>
+        </div>
+
+
+    </body>
+
+
+{% endblock %}
