@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, json, redirect, session, blueprints, url_for, flash
-import datetime
+import cx_Oracle
+from datetime import datetime
 from flaskext.mysql import MySQL
 from flask.blueprints import Blueprint
 import re
@@ -20,3 +21,8 @@ app.config['MYSQL_DATABASE_DB'] = 'seashore'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
 print("-----Established Database Connection-----")
+
+user = "dws"
+pw = "dws"
+dsn = "localhost/orcl"
+cx_Oracle.init_oracle_client(lib_dir="/Users/qiao/instantclient_19_8")
