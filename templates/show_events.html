@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+   <body>
+       {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul class=flashes>
+            {% for message in messages %}
+              <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+      <table class="table table-event-information">
+
+          <tr>
+              {% for header in headers %}
+                <td>
+                   <strong>
+                       <span class="glyphicon glyphicon-asterisk text-primary"></span>
+                       {{ header }}
+                   </strong>
+               </td>
+              {% endfor %}
+          </tr>
+          {% for line in event_info %}
+            <tr>
+                {% for value in line %}
+                   <td class="text-primary">
+                       {{ value }}
+                   </td>
+                {% endfor %}
+            </tr>
+          {% endfor %}
+      </table>
+   </body>
+
+{% endblock %}
