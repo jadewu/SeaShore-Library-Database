@@ -1,6 +1,9 @@
 from flask import Flask, render_template, request, json, redirect, session, blueprints, url_for, flash
 import datetime
 from flaskext.mysql import MySQL
+import os
+import sys
+import cx_Oracle
 from flask.blueprints import Blueprint
 import re
 # html.escape() can be used to avoid XSS, but because of current bootstrap,
@@ -11,12 +14,19 @@ import re
 app = Flask(__name__)
 mysql = MySQL()
 
+
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 # MySQL config
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'password'
+app.config['MYSQL_DATABASE_PASSWORD'] = '2020DB!!'
 app.config['MYSQL_DATABASE_DB'] = 'seashore'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
 print("-----Established Database Connection-----")
+
+# Oracle config
+user = "dws"
+pw = "dws"
+dsn = "localhost/orcl"
+cx_Oracle.init_oracle_client(lib_dir="D:\instantclient_19_8")
