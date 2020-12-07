@@ -32,8 +32,7 @@ def signIn():
 
             if len(data) > 0:
                 print(data[0])
-                #if check_password_hash(str(data[0][4]),_password):
-                if _password == data[0][4]:
+                if check_password_hash(str(data[0][4]),_password):
                     session['user'] = data[0][0] # log user into session
                     return json.dumps({'response': "success"})
                 else:

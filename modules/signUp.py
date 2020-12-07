@@ -41,7 +41,7 @@ def signUp():
 
             conn = mysql.connect()
             cursor = conn.cursor()
-            # _hashed_password = generate_password_hash(_password)
+            _hashed_password = generate_password_hash(_password)
 
             # customers: customer_id, customer_username, customer_firstname, customer_lastname, customer_password, timestamp
 
@@ -52,10 +52,11 @@ def signUp():
             data = cursor.fetchall()
             if data:
                 return json.dumps({'response': "Username Exists"})
-
+            print(len(_hashed_password))
             # insert information
-            sql = "insert into customers (customer_username, customer_firstname, customer_lastname, customer_password, question, customer_answer) values (%s, %s, %s, %s, %s, %s)"
-            val = (_username, _firstname, _lastname, _password, _question, _answer)
+            sql = "insert into customers (customer_username, customer_firstname, customer_lastname, " \
+                  "customer_password, question, customer_answer) values (%s, %s, %s, %s, %s, %s) "
+            val = (_username, _firstname, _lastname, _hashed_password, _question, _answer)
             cursor.execute(sql, val)
 
             # get information

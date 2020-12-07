@@ -2,6 +2,8 @@ from init import *
 from init.pattern import check_pattern
 req = Blueprint('req', __name__)
 
+next_customer = -1
+
 @req.route('/cusRequest', methods=['POST','GET'])
 def cusRequest():
     if not session.get('user'):
@@ -49,7 +51,7 @@ def cusRequest():
                 val = (_customer, _bookStoId)
                 cursor.execute(sql, val)
                 sql = "select request_id, request_start, customer_id from requests where (book_sto_id = %s and " \
-                      "request_status = 'W') order by request_id asc; "
+                      "request_status = 'W') order by request_start asc; "
                 val = (_bookStoId)
                 cursor.execute(sql, val)
                 waiting_list = cursor.fetchall()
@@ -129,16 +131,16 @@ def returnRequest():
 
     # update request status from Yes to Finished
     sql = "update requests set request_status = 'F' where request_id = %s"
-    val = (_requestID)
+    val = _requestID
     cursor.execute(sql, val)
 
     # update book_storage instock from N to Y
     sql = "select book_sto_id from requests where request_id = %s"
-    val = (_requestID)
+    val = _requestID
     cursor.execute(sql, val)
     _bookStoID = cursor.fetchall()[0][0]
     sql = "update books_storage set instock = 'Y' where book_sto_id = %s"
-    val = (_bookStoID)
+    val = _bookStoID
     cursor.execute(sql, val)
 
     conn.commit()

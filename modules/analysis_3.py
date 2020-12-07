@@ -24,27 +24,35 @@ def analysis_3():
             while(data[i][0]>counter):
                 amounts.append(0)
                 counter+=1
-            max_amount = max(max_amount, int(data[i][1]))
+            if int(data[i][1]) > max_amount:
+                max_amount = int(data[i][1])
+                max_index = counter
             amounts.append(data[i][1])
             counter+=1
         while counter < 8:
             amounts.append(0)
             counter+=1
         amounts.reverse()
-        plt.plot(range(1,9),amounts,c = 'green')
+        max_index = 8-max_index
+        plt.plot(range(1,9),amounts,'o--', c = 'green')
+        show_max = '[' + str(max_index) + ' ' + str(max_amount) + ']'
+        plt.annotate(show_max, (max_index, max_amount))
         plt.ylabel('Income')
         plt.title('Income in a week')
         plt.xlabel('Days(in a week)')
         plt.xticks(range(0,10))
         if len(data) > 0:
-            plt.yticks(range(0,int(max_amount)+5,10))
+            interm = (int(max_amount) + 5) // 10
+            plt.yticks(range(0,int(max_amount)+5,interm))
         # if(len(data) > 0):
         #     plt.ylim([0, max(data[:][0])+1])
         # plt.savefig('/Users/qiao/Documents/GitHub/SeaShore-Library-Database/top3booksInWeek.png')
         plt.savefig('static/images/incomeInWeek.jpg')
 
         plt.clf()
-        sql = "select round(sysdate-request_start),sum(bill_amount) from customer_request where sysdate - request_start <= 30 group by round(sysdate-request_start) order by round(sysdate-request_start)"
+        plt.figure(figsize=(12, 5))
+        sql = "select round(sysdate-request_start),sum(bill_amount) from customer_request where sysdate - " \
+              "request_start <= 30 group by round(sysdate-request_start) order by round(sysdate-request_start) "
         cursor.execute(sql)
         data = cursor.fetchall()
         print(data)
@@ -56,20 +64,26 @@ def analysis_3():
             while(data[i][0]>counter):
                 amounts.append(0)
                 counter+=1
-            max_amount = max(max_amount, int(data[i][1]))
+            if int(data[i][1]) > max_amount:
+                max_amount = int(data[i][1])
+                max_index = counter
             amounts.append(data[i][1])
             counter+=1
         while counter < 31:
             amounts.append(0)
             counter+=1
         amounts.reverse()
-        plt.plot(range(1,32),amounts,c = 'orange')
+        max_index = 31 - max_index
+        plt.plot(range(1,32),amounts,'o--',c = 'orange')
+        show_max = '[' + str(max_index) + ' ' + str(max_amount) + ']'
+        plt.annotate(show_max, (max_index, max_amount))
         plt.ylabel('Income')
         plt.title('Income in a month')
         plt.xlabel('Days(in a month)')
         plt.xticks(range(0,32, 3))
         if len(data) > 0:
-            plt.yticks(range(0,int(max_amount)+5,10))
+            interm = (int(max_amount) + 5) // 10
+            plt.yticks(range(0,int(max_amount)+5,interm))
         # if(len(data) > 0):
         #     plt.ylim([0, max(data[:][0])+1])
         # plt.savefig('/Users/qiao/Documents/GitHub/SeaShore-Library-Database/top3booksInWeek.png')

@@ -23,7 +23,7 @@ def signIn_staff():
         cursor.close()
         conn.close()
 
-        if len(data) > 0 and _password == data[0][4]:
+        if len(data) > 0 and check_password_hash(str(data[0][4]),_password):
             session['staff'] = data[0][0] # log user into session
             return redirect('/staffHome')
         else:

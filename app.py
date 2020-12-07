@@ -25,11 +25,12 @@ from modules.enterUsername_staff import enter_username_staff
 from modules.enterUsername import enter_username
 from modules.changePassword import change_password
 from modules.newSecurityQuestion import new_security_question
+from modules.showEvents import show_events
+from modules.help import help_
 from modules.analysis_1 import ana
 from modules.analysis_2 import ana2
 from modules.analysis_3 import ana3
 from modules.analysis_4 import ana4
-# from modules.analysis_1 import ana
 
 
 app = Flask(__name__)
@@ -59,6 +60,8 @@ app.register_blueprint(delete_request_staff)
 app.register_blueprint(change_password_staff)
 app.register_blueprint(enter_username_staff)
 app.register_blueprint(new_security_question)
+app.register_blueprint(show_events)
+app.register_blueprint(help_)
 app.register_blueprint(ana)
 app.register_blueprint(ana2)
 app.register_blueprint(ana3)

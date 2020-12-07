@@ -27,7 +27,7 @@ def signUp_staff():
 
         conn = mysql.connect()
         cursor = conn.cursor()
-        # _hashed_password = generate_password_hash(_password)
+        _hashed_password = generate_password_hash(_password)
 
         # customers: customer_id, customer_username, customer_firstname, customer_lastname, customer_password, timestamp
 
@@ -42,7 +42,7 @@ def signUp_staff():
 
         # insert information
         sql = "insert into employees (employee_username, employee_firstname, employee_lastname, employee_password, question, employee_answer) values (%s, %s, %s, %s, %s, %s)"
-        val = (_username, _firstname, _lastname, _password, _question, _answer)
+        val = (_username, _firstname, _lastname, _hashed_password, _question, _answer)
         cursor.execute(sql, val)
 
         # get information

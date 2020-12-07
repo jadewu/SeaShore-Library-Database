@@ -3,25 +3,19 @@ from init.pattern import check_pattern
 import time
 ana4 = Blueprint('ana4', __name__)
 
-def plotoneline(data, n):
+def plotoneline(data):
     counter = 0
     amount = []
     max_amount = 0
     max_index = 0
+    print(data)
     for i in range(len(data)):
-        while (data[i][0] > counter):
-            amount.append(0)
-            counter += 1
-        if int(data[i][1]) > max_amount:
+        amount.append(data[i])
+        if data[i] > max_amount:
             max_index = i
-            max_amount = int(data[i][1])
-        amount.append(data[i][1])
-        counter += 1
-    while counter < n:
-        amount.append(0)
-        counter += 1
+            max_amount = data[i]
     amount.reverse()
-    return (amount, max_index,max_amount)
+    return (amount, len(data)-max_index, max_amount)
 
 @ana4.route('/analysis_4', methods=['POST','GET'])
 def analysis_4():
@@ -39,23 +33,24 @@ def analysis_4():
         cursor.execute(sql)
         odata = cursor.fetchall()
 
-        data1 = []
-        data2 = []
+        data1 = [0 for _ in range(8)]
+        data2 = [0 for _ in range(8)]
         for d in odata:
             if d[1] == 'C':
-                data1.append([d[0], d[2]])
+                data1[d[0]] = int(d[2])
             else:
-                data2.append([d[0], d[2]])
-        amount1, max_index1, max_amount1 = plotoneline(data1, 8)
-        amount2, max_index2, max_amount2 = plotoneline(data2, 8)
+                data2[d[0]] = int(d[2])
+        amount1, max_index1, max_amount1 = plotoneline(data1)
+        amount2, max_index2, max_amount2 = plotoneline(data2)
+        print(max_index1, max_amount1)
         max_amount = max(max_amount1, max_amount2)
 
-        plt.plot(range(1, 9),amount1, 'r-o', color='green', label='campaign')
-        plt.plot(range(1, 9), amount2, 'r-o', color='orange', label='exhibition')
+        plt.plot(range(1, 9),amount1, 'o--', color='green', label='campaign')
+        plt.plot(range(1, 9), amount2, 'o--', color='orange', label='exhibition')
         show_max1 = '[' + str(max_index1) + ' ' + str(max_amount1) + ']'
-        plt.annotate(show_max1, xytext=(max_index1, max_amount1), xy=(max_index1, max_amount1))
+        plt.annotate(show_max1, (max_index1, max_amount1))
         show_max2 = '[' + str(max_index2) + ' ' + str(max_amount2) + ']'
-        plt.annotate(show_max2, xytext=(max_index2, max_amount2), xy=(max_index2, max_amount2))
+        plt.annotate(show_max2, (max_index2, max_amount2))
         plt.ylabel('Number of events')
         plt.title('Number of events in a week')
         plt.xlabel('Days(in a week)')
@@ -69,23 +64,28 @@ def analysis_4():
         plt.savefig('static/images/eventsInWeek.jpg')
 
         plt.clf()
+        plt.figure(figsize=(12, 5))
         sql = "select round(sysdate-start_time), event_type, count(event_id) from events where round(sysdate-start_time) <=7 group by round(sysdate-start_time), event_type order by round(sysdate-start_time)"
         cursor.execute(sql)
         odata = cursor.fetchall()
 
-        data1 = []
-        data2 = []
+        data1 = [0 for _ in range(31)]
+        data2 = [0 for _ in range(31)]
         for d in odata:
             if d[1] == 'C':
-                data1.append([d[0], d[2]])
+                data1[d[0]] = int(d[2])
             else:
-                data2.append([d[0], d[2]])
-        amount1, max_index1, max_amount1 = plotoneline(data1, 31)
-        amount2, max_index2, max_amount2 = plotoneline(data2, 31)
+                data2[d[0]] = int(d[2])
+        amount1, max_index1, max_amount1 = plotoneline(data1)
+        amount2, max_index2, max_amount2 = plotoneline(data2)
         max_amount = max(max_amount1, max_amount2)
 
-        plt.plot(range(1, 32),amount1, 'r-o', color='green', label='campaign')
-        plt.plot(range(1, 32), amount2, 'r-o', color='orange', label='exhibition')
+        plt.plot(range(1, 32),amount1, 'o--', color='green', label='campaign')
+        plt.plot(range(1, 32), amount2, 'o--', color='orange', label='exhibition')
+        show_max1 = '[' + str(max_index1) + ' ' + str(max_amount1) + ']'
+        plt.annotate(show_max1, (max_index1, max_amount1))
+        show_max2 = '[' + str(max_index2) + ' ' + str(max_amount2) + ']'
+        plt.annotate(show_max2, (max_index2, max_amount2))
         plt.ylabel('Number of events')
         plt.title('Number of events in a month')
         plt.xlabel('Days(in a month)')

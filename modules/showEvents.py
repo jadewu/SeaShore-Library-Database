@@ -5,7 +5,7 @@ show_events = Blueprint('show_events', __name__)
 
 
 @show_events.route('/showEvents')
-def showEvent():
+def showEvents():
     if session.get('user'):
         conn = mysql.connect()
         cursor = conn.cursor()

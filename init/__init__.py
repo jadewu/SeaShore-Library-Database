@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, json, redirect, session, blueprints, url_for, flash
-import datetime
+from datetime import datetime
 from flaskext.mysql import MySQL
+from werkzeug.security import generate_password_hash, check_password_hash
 import os
 import sys
 import cx_Oracle

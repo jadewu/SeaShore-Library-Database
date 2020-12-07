@@ -2,6 +2,13 @@
 
 {% block content %}
    <body>
+   {% if alerts|length > 0 %}
+        <p><strong> You can proceed following requests now: </strong></p>
+        {% for i in range(alerts|length) %}
+            <p style="color:Tomato;"><strong> {{alerts[i][0]}} {{alerts[i][1]}}</strong></p>
+        {% endfor %}
+   {% endif %}
+
    {% with messages = get_flashed_messages() %}
   {% if messages %}
     <ul class=flashes>
