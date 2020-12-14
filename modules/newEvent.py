@@ -12,11 +12,11 @@ def newEvent():
         _startTime = request.form['startTime']
         _stopTime = request.form['stopTime']
         error = ""
-        startDate = datetime.strptime(_startTime, '%Y-%m-%d')
-        stopDate = datetime.strptime(_stopTime, '%Y-%m-%d')
+        startDate = datetime.datetime.strptime(_startTime, '%Y-%m-%d')
+        stopDate = datetime.datetime.strptime(_stopTime, '%Y-%m-%d')
         if len(_eventName) > 32:
             error += 'event name length should be less than 32; '
-        if startDate < datetime.now():
+        if startDate < datetime.datetime.now():
             error += 'start time should be greater than current time'
         if startDate > stopDate:
             error += 'start time should be less than stop time'

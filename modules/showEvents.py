@@ -10,13 +10,12 @@ def showEvents():
         conn = mysql.connect()
         cursor = conn.cursor()
         # get all events
-        sql = "select event_id, event_type, start_time, stop_time from events"
-        # sql = "select event_id, event_name, event_type, start_time, stop_time from events"
+        # sql = "select event_id, event_type, start_time, stop_time from events"
+        sql = "select event_id, event_name, event_type, start_time, stop_time from events"
         cursor.execute(sql)
         data = cursor.fetchall()
-
-        headers = ['event_id', 'event_type', 'start_time', 'stop_time']
-        # headers = ['event_id', 'event_name', 'event_type', 'start_time', 'stop_time']
+        # headers = ['event_id', 'event_type', 'start_time', 'stop_time']
+        headers = ['event_id', 'event_name', 'event_type', 'start_time', 'stop_time']
 
         conn.commit()
         cursor.close()

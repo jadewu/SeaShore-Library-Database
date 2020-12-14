@@ -34,6 +34,7 @@
         <th>customer_firstname</th>
           <th>customer_lastname</th>
         <th>Info</th>
+          <th>Operation</th>
         </tr>
 
         {% for info in user_info %}
@@ -44,6 +45,7 @@
           <td>{{info[2]}}</td>
             <td>{{info[3]}}</td>
           <td><a class="action" href="/checkRequest_staff?id={{info[0]}}">Requests</a></td>
+            <td><a class="action" href="/deleteUser?id={{info[0]}}">Delete</a></td>
 
         </tr>
         {% endfor %}
@@ -64,17 +66,59 @@
             {% endfor %}
             <td><a class="action" href="/changeInfo_staff">change</a></td>
         </tr>
+    </table>
+   <p> Customer history information: </p>
+    <table class="table table-delete-information">
+      <tr>
+        <th>history id</th>
+        <th>username</th>
+        <th>firstname</th>
+          <th>lastname</th>
+          <th>delete date</th>
+        </tr>
+        {% for info in delete_info %}
+            <tr>
+                {% for info_ in info %}
+                    <td>{{info_}}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
 
     </table>
-   <p> You can <a href="/manageBook">manage books</a> from here. </p>
-   <p> You can <a href="/manageEvent">manage events</a> from here. </p>
-   <p> You can <a href="/changePassword_staff">change password</a> from here. </p>
-   <p> You can <a href="/newSecurityQuestion">add security questions</a> from here. </p>
-   <p> You can <a href="/analysis_1">check top frequently borrowed books</a> from here. </p>
-   <p> You can <a href="/analysis_2">check top active users</a> from here. </p>
-   <p> You can <a href="/analysis_3">check library income</a> from here. </p>
-   <p> You can <a href="/analysis_4">check number of events</a> from here. </p>
-   <p> You can <a href="/logout_staff">log out</a> from here. </p>
+   <p> Main functions: </p>
+    <table class="table table-employee-information">
+      <tr>
+          <td>Manage</td>
+        <td> <a href="/manageBook">manage books</a> </td>
+        <td><a href="/manageEvent">manage events</a></td>
+          <td><a href="/newSecurityQuestion">manage security questions</a></td>
+          <td></td>
+        </tr>
+        <tr>
+        <td>Account setting</td>
+        <td><a href="/changePassword_staff">change password</a></td>
+        <td><a href="/logout_staff">log out</a></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+        <td>Analysis</td>
+        <td><a href="/analysis_1">frequently borrowed books</a></td>
+        <td><a href="/analysis_2">active users</a></td>
+            <td><a href="/analysis_3">income</a></td>
+        <td><a href="/analysis_4">events</a></td>
+        </tr>
+
+    </table>
+<!--   <p> You can <a href="/manageBook">manage books</a> from here. </p>-->
+<!--   <p> You can <a href="/manageEvent">manage events</a> from here. </p>-->
+<!--   <p> You can <a href="/changePassword_staff">change password</a> from here. </p>-->
+<!--   <p> You can <a href="/newSecurityQuestion">add security questions</a> from here. </p>-->
+<!--   <p> You can <a href="/analysis_1">check top frequently borrowed books</a> from here. </p>-->
+<!--   <p> You can <a href="/analysis_2">check top active users</a> from here. </p>-->
+<!--   <p> You can <a href="/analysis_3">check library income</a> from here. </p>-->
+<!--   <p> You can <a href="/analysis_4">check number of events</a> from here. </p>-->
+<!--   <p> You can <a href="/logout_staff">log out</a> from here. </p>-->
 
 
 

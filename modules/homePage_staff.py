@@ -18,15 +18,21 @@ def staffHome():
             cursor.execute(sql)
 
         data = cursor.fetchall()
+
         sql = "select employee_id, employee_username, employee_firstname, employee_lastname from employees where employee_id = %s"
         val = (session['staff'])
         cursor.execute(sql, val)
         personal_info = cursor.fetchall()
+
+        sql = "select cust_hist_id, customer_username, customer_firstname, customer_lastname, delete_date from cust_history"
+        cursor.execute(sql)
+        delete_info = cursor.fetchall()
+
         conn.commit()
         cursor.close()
         conn.close()
         # parameters
-        return render_template('customerHome_staff.html', user_info = data, personal_info = personal_info)
+        return render_template('customerHome_staff.html', user_info = data, personal_info = personal_info, delete_info=delete_info)
 
     else:
         return redirect('/signIn_staff')

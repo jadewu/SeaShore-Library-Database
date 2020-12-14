@@ -9,7 +9,7 @@ def showResources():
     conn = mysql.connect()
     cursor = conn.cursor()
 
-    sql = "select * from books limit 10;"
+    sql = "select * from books;"
     cursor.execute(sql)
     data = cursor.fetchall()
 

@@ -59,6 +59,8 @@ def signUp():
             val = (_username, _firstname, _lastname, _hashed_password, _question, _answer)
             cursor.execute(sql, val)
 
+            print("test")
+
             # get information
             sql = "select customer_id from customers where customer_username = %s"
             val = _username

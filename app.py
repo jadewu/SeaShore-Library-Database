@@ -31,6 +31,7 @@ from modules.analysis_1 import ana
 from modules.analysis_2 import ana2
 from modules.analysis_3 import ana3
 from modules.analysis_4 import ana4
+from modules.deleteUser import delete_user
 
 
 app = Flask(__name__)
@@ -66,6 +67,7 @@ app.register_blueprint(ana)
 app.register_blueprint(ana2)
 app.register_blueprint(ana3)
 app.register_blueprint(ana4)
+app.register_blueprint(delete_user)
 
 from flask import Flask, render_template, request, json, redirect, session, blueprints
 from flaskext.mysql import MySQL
@@ -99,13 +101,13 @@ def showRooms():
 @app.route('/logout')
 def logout():
     session.pop('user', None)
-    return redirect('/')
+    return redirect('/signIn')
 
 # log out current user
 @app.route('/logout_staff')
 def logout_staff():
     session.pop('staff', None)
-    return redirect('/')
+    return redirect('/signIn_staff')
 
 
 """ Waiting List Logic:

@@ -51,13 +51,15 @@ def customerHome():
         val = cid
         cursor.execute(sql, val)
         data = cursor.fetchall()
+        if len(data) == 0:
+            return redirect('/signIn')
         user_info = {"User Name": data[0][1], "First Name": data[0][2], "Last Name": data[0][3]}
 
         # get customer's requests
         sql = "select a.request_id, book_name, a.book_sto_id, request_status, request_start, request_stop, " \
               "datediff(request_stop, curdate()) " \
               "from requests a join books_storage b join books c where a.customer_id = %s and " \
-              "a.book_sto_id = b.book_sto_id and b.book_id = c.book_id"
+              "a.book_sto_id = b.book_sto_id and b.book_id = c.book_id order by request_id"
         val = cid
         cursor.execute(sql, val)
         req_cols = ("ID", "Book Name", "Book Storage ID", "Status", "Start", "Stop", "Overdue", "Receipt", "Operation")
@@ -71,7 +73,7 @@ def customerHome():
 
         # get customer's reservations
         sql = "select a.reservation_id, reservation_date, room_id from reservations as a, rooms_has_reservations as b " \
-              "where a.customer_id = %s and a.reservation_id = b.reservation_id; "
+              "where a.customer_id = %s and a.reservation_id = b.reservation_id order by a.reservation_id; "
         val = cid
         cursor.execute(sql, val)
         reservations = cursor.fetchall()

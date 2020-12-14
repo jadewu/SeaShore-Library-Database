@@ -27,7 +27,13 @@
             <tr>
                 {% for value in line %}
                    <td class="text-primary">
-                       {{ value }}
+                       {% if value == "C" %}
+                            Campaign
+                       {% elif value == "E" %}
+                            Exhibition
+                       {% else %}
+                            {{ value }}
+                       {% endif %}
                    </td>
                 {% endfor %}
             </tr>

@@ -23,8 +23,8 @@ def showBill():
         cursor.execute(sql, val)
         customer_name = cursor.fetchall()[0]
 
-        sql = "insert into receipts (holder_first_name, holder_last_name, bill_id, request_id) values (%s, %s, %s, %s)"
-        val = (customer_name[0], customer_name[1], bill_id, req_id)
+        sql = "insert into receipts (holder_first_name, holder_last_name, bill_id) values (%s, %s, %s)"
+        val = (customer_name[0], customer_name[1], bill_id)
         cursor.execute(sql, val)
         data = cursor.fetchall()
         print(data)
@@ -32,7 +32,7 @@ def showBill():
         cursor.close()
         conn.close()
 
-        return redirect('/showReceipt?bill_id='+str(bill_id))
+        return redirect(('/showReceipt?bill_id='+str(bill_id)))
     else:
         conn = mysql.connect()
         cursor = conn.cursor()

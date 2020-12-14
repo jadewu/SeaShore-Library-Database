@@ -11,7 +11,7 @@ def analysis_3():
         import matplotlib.pyplot as plt
         matplotlib.use('agg')
         # update library income in last week/month
-
+        plt.figure(figsize=(10, 7))
         con = cx_Oracle.connect(user, pw, dsn)
         cursor = con.cursor()
         sql = "select round(sysdate-request_start),sum(bill_amount) from customer_request where sysdate - request_start <= 7 group by round(sysdate-request_start) order by round(sysdate-request_start)"
@@ -20,6 +20,7 @@ def analysis_3():
         max_amount = 0
         amounts = []
         counter = 0
+        max_index = 0
         for i in range(len(data)):
             while(data[i][0]>counter):
                 amounts.append(0)
@@ -44,6 +45,9 @@ def analysis_3():
         if len(data) > 0:
             interm = (int(max_amount) + 5) // 10
             plt.yticks(range(0,int(max_amount)+5,interm))
+        else:
+            plt.yticks(range(0, 2))
+            plt.ylim([-0.2,1.2])
         # if(len(data) > 0):
         #     plt.ylim([0, max(data[:][0])+1])
         # plt.savefig('/Users/qiao/Documents/GitHub/SeaShore-Library-Database/top3booksInWeek.png')
@@ -60,6 +64,7 @@ def analysis_3():
         max_amount = 0
         amounts = []
         counter = 0
+        max_index = 0
         for i in range(len(data)):
             while(data[i][0]>counter):
                 amounts.append(0)
@@ -84,6 +89,9 @@ def analysis_3():
         if len(data) > 0:
             interm = (int(max_amount) + 5) // 10
             plt.yticks(range(0,int(max_amount)+5,interm))
+        else:
+            plt.yticks(range(0, 2))
+            plt.ylim([-0.2,1.2])
         # if(len(data) > 0):
         #     plt.ylim([0, max(data[:][0])+1])
         # plt.savefig('/Users/qiao/Documents/GitHub/SeaShore-Library-Database/top3booksInWeek.png')

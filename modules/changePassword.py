@@ -13,7 +13,13 @@ def changePassword():
         sql = "select customer_answer from customers where customer_username = %s"
         val = _username
         cursor.execute(sql, val)
-        ans = cursor.fetchall()[0][0]
+        data = cursor.fetchall()
+        if len(data) == 0:
+            flash("Wrong username.")
+            cursor.close()
+            conn.close()
+            return redirect('/changePassword')
+        ans = data[0][0]
         if ans == _answer:
             error = ""
             if not check_pattern(_newpassword, "pwd"):
@@ -23,7 +29,7 @@ def changePassword():
                 return redirect('/changePassword_staff')
 
             sql = "update customers set customer_password = %s where customer_username = %s"
-            val = (_newpassword, _username)
+            val = (generate_password_hash(_newpassword), _username)
             cursor.execute(sql, val)
             flash("Password changed succesfully")
             conn.commit()
