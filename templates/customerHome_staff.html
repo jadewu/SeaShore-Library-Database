@@ -75,12 +75,14 @@
         <th>firstname</th>
           <th>lastname</th>
           <th>delete date</th>
+          <th>delete by</th>
         </tr>
-        {% for info in delete_info %}
+        {% for i in range(0, delete_info|length) %}
             <tr>
-                {% for info_ in info %}
-                    <td>{{info_}}</td>
+                {% for j in range(0, delete_info[i]|length - 1) %}
+                    <td>{{delete_info[i][j]}}</td>
                 {% endfor %}
+                 <td>{{delete_name[i]}}</td>
             </tr>
         {% endfor %}
 

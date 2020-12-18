@@ -10,6 +10,9 @@ def confirmation():
     if type == 'return':
         request_id = request.args.get('request_id')
         overdue = request.args.get('overdue')
+        print('a')
+        print(overdue)
+        print('b')
         yes = "/returnRequest?request_id=" + request_id
         no = "/customerHome"
         return render_template('confirmation.html', type=type, yes=yes, no=no, overdue=int(overdue))

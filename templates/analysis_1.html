@@ -4,7 +4,19 @@
     <body class="text-center">
         <div class="row justify-content-center">
         <form class="form-analysis_1" style="width: 50%;" action="/analysis_1" method="post">
-                <p>Update all analysis.</p>
+            <p>Start Time:<label for="startTime1" class="sr-only">startTime</label>
+            <input type="date" name="startTime1" id="startTime1" placeholder="YYYY-MM-DD" required></p>
+
+            <p>Stop Time:<label for="stopTime1" class="sr-only">stopTime</label>
+            <input type="date" name="stopTime1" id="stopTime1" placeholder="YYYY-MM-DD" required></p>
+
+            <p><label for="interval1" class="sr-only">Interval</label>
+              <select name="interval1" id="interval1" class="form-control" class="form-control" required>
+                  <option> Daily </option>
+                  <option> Monthly </option>
+              </select>
+            </p>
+
             <div id="operations">
                 <input type="submit" value="Update" />
             </div>
@@ -20,9 +32,9 @@
             <div>
                 <img src={{image_name4}} style="position:relative; top:0px; left:-200px; border:none;" alt="top3booksdaily">
             </div>
-            <div>
-                <img src={{image_name5}} style="position:relative; top:0px; left:-300px;border:none;" alt="top3booksmonthly">
-            </div>
+<!--            <div>-->
+<!--                <img src={{image_name5}} style="position:relative; top:0px; left:-300px;border:none;" alt="top3booksmonthly">-->
+<!--            </div>-->
         </form>
         </div>
 

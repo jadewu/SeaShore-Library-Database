@@ -8,9 +8,11 @@ def changePassword():
     cursor = conn.cursor()
     if request.method == 'POST':
         _username = request.form['inputUsername']
+        _oripassword = request.form['oriPassword']
+        _question = request.form['inputQuestion']
         _answer = request.form['answer']
         _newpassword = request.form['inputPassword']
-        sql = "select customer_answer from customers where customer_username = %s"
+        sql = "select customer_password, question, customer_answer from customers where customer_username = %s"
         val = _username
         cursor.execute(sql, val)
         data = cursor.fetchall()
@@ -19,8 +21,18 @@ def changePassword():
             cursor.close()
             conn.close()
             return redirect('/changePassword')
-        ans = data[0][0]
-        if ans == _answer:
+        ans = data[0]
+        if not check_password_hash(str(ans[0]),_oripassword):
+            flash("Incorrect original password.")
+            cursor.close()
+            conn.close()
+            return redirect('/changePassword')
+        if ans[1] != _question:
+            flash("Incorrect security question.")
+            cursor.close()
+            conn.close()
+            return redirect('/changePassword')
+        if ans[2] == _answer:
             error = ""
             if not check_pattern(_newpassword, "pwd"):
                 error += 'Enter valid new Password; '
@@ -47,16 +59,21 @@ def changePassword():
             return redirect('/changePassword')
     else:
         if session.get('user'):
-            sql = "select customer_username,question from customers where customer_id = %s"
+            sql = "select customer_username from customers where customer_id = %s"
             cursor.execute(sql, session.get('user'))
             data = cursor.fetchall()
             username = data[0][0]
-            question = data[0][1]
+            # get questions
+            sql = "select * from questions"
+            cursor.execute(sql)
+            questions = cursor.fetchall()
         else:
             username = session.get('user_tmp')
-            sql = "select question from customers where customer_username = %s"
-            cursor.execute(sql, username)
-            question = cursor.fetchall()[0][0]
-            cursor.close()
-            conn.close()
-        return render_template('changePassword.html', username=username, question=question)
+            # get questions
+            sql = "select * from questions"
+            cursor.execute(sql)
+            questions = cursor.fetchall()
+
+        cursor.close()
+        conn.close()
+        return render_template('changePassword.html', username=username, questions=questions)

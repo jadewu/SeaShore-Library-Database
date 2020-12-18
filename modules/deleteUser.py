@@ -12,8 +12,8 @@ def deleteUser():
         elif request.args.get('id_checked'):
             conn = mysql.connect()
             cursor = conn.cursor()
-            sql = "delete from customers where customer_id = %s"
-            val = (request.args.get('id_checked'))
+            sql = "call delete_user (%s,%s)"
+            val = (request.args.get('id_checked'), session.get('staff'))
             cursor.execute(sql, val)
             conn.commit()
             cursor.close()

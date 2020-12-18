@@ -10,7 +10,9 @@ def changePassword_staff():
         _username = request.form['inputUsername']
         _answer = request.form['answer']
         _newpassword = request.form['inputPassword']
-        sql = "select employee_answer from employees where employee_username = %s"
+        _oripassword = request.form['oriPassword']
+        _question = request.form['inputQuestion']
+        sql = "select employee_password, question, employee_answer from employees where employee_username = %s"
         val = _username
         cursor.execute(sql, val)
         data = cursor.fetchall()
@@ -18,9 +20,19 @@ def changePassword_staff():
             flash("Wrong username.")
             cursor.close()
             conn.close()
-            return redirect('/changePassword')
-        ans = data[0][0]
-        if ans == _answer:
+            return redirect('/changePassword_staff')
+        ans = data[0]
+        if not check_password_hash(str(ans[0]),_oripassword):
+            flash("Incorrect original password.")
+            cursor.close()
+            conn.close()
+            return redirect('/changePassword_staff')
+        if ans[1] != _question:
+            flash("Incorrect security question.")
+            cursor.close()
+            conn.close()
+            return redirect('/changePassword_staff')
+        if ans[2] == _answer:
             error = ""
             if not check_pattern(_newpassword, "pwd"):
                 error += 'Enter valid new Password; '
@@ -51,12 +63,16 @@ def changePassword_staff():
             cursor.execute(sql, session.get('staff'))
             data = cursor.fetchall()
             username = data[0][0]
-            question = data[0][1]
+            # get questions
+            sql = "select * from questions"
+            cursor.execute(sql)
+            questions = cursor.fetchall()
         else:
             username = session.get('staff_tmp')
-            sql = "select question from employees where employee_username = %s"
-            cursor.execute(sql, username)
-            question = cursor.fetchall()[0][0]
-            cursor.close()
-            conn.close()
-        return render_template('changePassword_staff.html', username=username, question=question)
+            # get questions
+            sql = "select * from questions"
+            cursor.execute(sql)
+            questions = cursor.fetchall()
+        cursor.close()
+        conn.close()
+        return render_template('changePassword_staff.html', username=username, questions=questions)
